@@ -32,14 +32,14 @@ const AuthForm = () => {
                 Fill in the details and register your account.
               </p>
 
-              <div className="w-full h-64 relative">
+              {/* <div className="w-full h-64 relative">
                 <Orb
                   hoverIntensity={0.5}
                   rotateOnHover={true}
                   hue={0}
                   forceHoverState={false}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
 
@@ -48,13 +48,13 @@ const AuthForm = () => {
             {/* Mobile-only logo and header */}
             <div className="flex flex-col items-center mb-8 md:hidden">
               <span className="text-2xl font-bold text-white mb-2">SpeakWell</span>
-              <h2 className="text-3xl text-white font-bold">Create Account</h2>
+              <h2 className="text-3xl text-white font-bold px-20">Create Account</h2>
             </div>
             
             {/* Desktop-only header */}
-            <div className="hidden md:block">
+            <div className="hidden md:block md:flex md:flex-col md:items-center">
               <h2 className="text-3xl text-white font-bold mb-2">
-                Sign Up Account
+                Sign Up
               </h2>
               <p className="text-gray-400 mb-8">
                 Enter your personal data to create your account.
@@ -88,7 +88,7 @@ const AuthForm = () => {
                     type="text"
                     id="firstName"
                     placeholder="eg. John"
-                    className="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white"
+                    className="w-full bg-zinc-900 border border-gray-900 rounded-lg p-3 text-white"
                   />
                 </div>
                 <div>
@@ -99,7 +99,7 @@ const AuthForm = () => {
                     type="text"
                     id="lastName"
                     placeholder="eg. Francisco"
-                    className="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white"
+                    className="w-full bg-zinc-900 border border-gray-900 rounded-lg p-3 text-white"
                   />
                 </div>
               </div>
@@ -112,7 +112,7 @@ const AuthForm = () => {
                   type="email"
                   id="email"
                   placeholder="eg. johnfrans@gmail.com"
-                  className="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white"
+                  className="w-full bg-zinc-900 border border-gray-900 rounded-lg p-3 text-white"
                 />
               </div>
 
@@ -125,7 +125,7 @@ const AuthForm = () => {
                     type={showPassword ? "text" : "password"}
                     id="password"
                     placeholder="Enter your password"
-                    className="w-full bg-gray-900 border border-gray-800 rounded-lg p-3 text-white pr-10"
+                    className="w-full bg-zinc-900 border border-gray-900 rounded-lg p-3 text-white pr-10"
                   />
                   <button
                     type="button"

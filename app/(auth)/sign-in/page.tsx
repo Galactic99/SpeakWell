@@ -3,7 +3,7 @@ import AuthForm from '@/components/AuthForm'
 
 const SignIn = () => {
   return (
-    <div className="w-full min-h-screen bg-black flex items-center justify-center p-0 m-0 absolute inset-0">
+    <div className="bg-black w-full flex items-center justify-center py-8">
       <AuthForm />
     </div>
   )

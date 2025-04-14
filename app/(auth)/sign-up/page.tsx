@@ -3,9 +3,9 @@ import AuthForm from "@/components/AuthForm";
 
 const SignUp = () => {
   return (
-    <main className="bg-black min-h-screen w-full overflow-hidden">
+    <div className="bg-black w-full flex items-center justify-center py-8">
       <AuthForm />
-    </main>
+    </div>
   );
 };
 

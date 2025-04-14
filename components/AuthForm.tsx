@@ -10,11 +10,11 @@ const AuthForm = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <div className="w-full min-h-screen flex items-center justify-center p-4">
+    <div className="w-full flex items-center justify-center p-4">
       <div className="w-full max-w-6xl mx-auto bg-black rounded-xl overflow-hidden shadow-2xl">
         <div className="grid grid-cols-1 md:grid-cols-2 h-full">
           {/* Left side - hidden on mobile */}
-          <div className="col-span-1 hidden md:flex relative flex-col items-center justify-center text-white p-6 md:p-10">
+          <div className="col-span-1 hidden md:flex relative flex-col items-center justify-center text-white p-6 md:p-10" style={{ minHeight: "650px" }}>
             <div className="absolute inset-0">
               <Aurora
                 colorStops={["#8A3FFC", "#C77DFF", "#622EB5"]}
@@ -44,7 +44,7 @@ const AuthForm = () => {
           </div>
 
           {/* Right side - full width on mobile */}
-          <div className="col-span-1 md:col-span-1 bg-black p-6 md:p-10 flex flex-col justify-center">
+          <div className="col-span-1 md:col-span-1 bg-black p-6 md:p-10 flex flex-col justify-center" style={{ minHeight: "650px" }}>
             {/* Mobile-only logo and header */}
             <div className="flex flex-col items-center mb-8 md:hidden">
               <span className="text-2xl font-bold text-white mb-2">SpeakWell</span>

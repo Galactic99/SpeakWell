@@ -115,8 +115,6 @@ const AuthForm = () => {
     setError("");
     
     try {
-      console.log(`Processing ${type === "sign-in" ? 'Sign In' : 'Sign Up'} Data:`, values);
-      
       if (type === "sign-in") {
         // Sign in logic
         const { email, password } = values;
@@ -125,7 +123,6 @@ const AuthForm = () => {
         
         // Call server action to set cookie
         await signIn({ email, idToken });
-        console.log("User signed in successfully:", result.user);
         toast.success("Signed in successfully");
         router.push("/home");
       } else {
@@ -134,14 +131,11 @@ const AuthForm = () => {
         const name = `${firstName} ${lastName}`.trim();
         
         try {
-          console.log("Creating user in Firebase Auth with email:", email);
           // Create user in Firebase Auth
           const result = await createUserWithEmailAndPassword(auth, email, password);
           const uid = result.user.uid;
-          console.log("User created in Firebase Auth with UID:", uid);
           
           // Call server action to store user in Firestore
-          console.log("Calling server action with:", { uid, name, email });
           const signUpResult = await signUp({
             uid, 
             name, 
@@ -149,14 +143,10 @@ const AuthForm = () => {
             password
           });
           
-          console.log("Server action response:", signUpResult);
-          
           if (signUpResult.success) {
             toast.success("Account created successfully! Please sign in.");
             router.push("/sign-in");
           } else {
-            console.error("Server action failed:", signUpResult.message);
-            
             // Even if Firestore save fails, the account was created in Firebase Auth
             const isDbError = signUpResult.message.includes("Database error");
             if (isDbError) {
@@ -172,12 +162,10 @@ const AuthForm = () => {
             }
           }
         } catch (firebaseError: any) {
-          console.error("Firebase Auth error:", firebaseError);
           throw firebaseError; // Rethrow for the outer catch block to handle
         }
       }
     } catch (error: any) {
-      console.error("Authentication error:", error);
       // Handle Firebase auth errors
       switch (error.code) {
         case 'auth/email-already-in-use':
@@ -220,11 +208,9 @@ const AuthForm = () => {
         idToken 
       });
       
-      console.log("Google sign in successful:", result.user);
       toast.success("Signed in with Google successfully");
       router.push("/home");
     } catch (error: any) {
-      console.error("Google sign in error:", error);
       setError("Failed to sign in with Google. Please try again.");
       toast.error("Failed to sign in with Google. Please try again.");
     } finally {
@@ -246,11 +232,9 @@ const AuthForm = () => {
         idToken 
       });
       
-      console.log("GitHub sign in successful:", result.user);
       toast.success("Signed in with GitHub successfully");
       router.push("/home");
     } catch (error: any) {
-      console.error("GitHub sign in error:", error);
       setError("Failed to sign in with GitHub. Please try again.");
       toast.error("Failed to sign in with GitHub. Please try again.");
     } finally {

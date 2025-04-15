@@ -23,7 +23,31 @@ export default function FeedbackPage() {
         setAssessment(parsedAssessment);
       } catch (error) {
         console.error('Error parsing assessment:', error);
+        // Set default assessment if parsing fails
+        setAssessment({
+          score: 75,
+          strengths: ['Participated in English conversation practice'],
+          weaknesses: ['Assessment data could not be processed correctly'],
+          pronunciation: 'Assessment data unavailable',
+          fluency: 'Assessment data unavailable',
+          grammar: 'Assessment data unavailable',
+          vocabulary: 'Assessment data unavailable',
+          overall: 'You participated in the English practice session. Unfortunately, we encountered an issue processing your detailed assessment. Keep practicing regularly to improve your skills.'
+        });
       }
+    } else {
+      // If no assessment is found in storage, provide a default one
+      console.warn('No assessment found in session storage');
+      setAssessment({
+        score: 70,
+        strengths: ['Participated in English conversation practice'],
+        weaknesses: ['Assessment data was not saved properly'],
+        pronunciation: 'Assessment data unavailable',
+        fluency: 'Assessment data unavailable',
+        grammar: 'Assessment data unavailable',
+        vocabulary: 'Assessment data unavailable',
+        overall: 'Thank you for practicing your English! We weren\'t able to retrieve your detailed assessment data, but practicing regularly is the most important step to improving your skills.'
+      });
     }
     setLoading(false);
   }, [sessionId]);

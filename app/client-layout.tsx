@@ -12,12 +12,13 @@ export default function ClientLayout({
 }) {
   const pathname = usePathname();
   const isHomePath = pathname?.endsWith("/home");
+  const isSessionPath = pathname?.includes("/session/");
 
   return (
     <>
-      {!isHomePath && <Navbar />}
+      {!isHomePath && !isSessionPath && <Navbar />}
       <main className="flex-grow">{children}</main>
-      {!isHomePath && <Footer />}
+      {!isHomePath && !isSessionPath && <Footer />}
     </>
   );
 } 

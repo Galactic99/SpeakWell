@@ -14,6 +14,7 @@ import {
 } from 'react-icons/fa';
 import { getCurrentUser, logout } from '@/lib/actions/auth.action';
 import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 
 export default function HomePage() {
   const [user, setUser] = useState<{name: string, email: string, id: string} | null>(null);
@@ -63,6 +64,11 @@ export default function HomePage() {
     } catch (error) {
       console.error("Error logging out:", error);
     }
+  };
+
+  const startNewSession = () => {
+    const sessionId = uuidv4();
+    router.push(`/session/${sessionId}`);
   };
 
   // Display name or "Guest" if not loaded yet
@@ -141,9 +147,9 @@ export default function HomePage() {
         <div className="bg-zinc-900/60 backdrop-blur-sm rounded-2xl border border-zinc-800 p-8 mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {/* Start a Session Card */}
-            <Link 
-              href="/session/new" 
-              className="bg-gradient-to-br from-purple-900/30 to-black/80 backdrop-blur-sm p-6 rounded-xl border border-purple-800/40 hover:border-purple-500/70 transition-all hover:shadow-lg hover:shadow-purple-900/20 flex flex-col h-64"
+            <div 
+              onClick={startNewSession}
+              className="bg-gradient-to-br from-purple-900/30 to-black/80 backdrop-blur-sm p-6 rounded-xl border border-purple-800/40 hover:border-purple-500/70 transition-all hover:shadow-lg hover:shadow-purple-900/20 flex flex-col h-64 cursor-pointer"
             >
               <div className="w-12 h-12 bg-purple-900/50 rounded-full flex items-center justify-center mb-4">
                 <FaPlay className="text-purple-400 text-lg" />
@@ -155,7 +161,7 @@ export default function HomePage() {
               <div className="mt-4 text-purple-400 font-medium text-sm flex items-center">
                 Begin practice <FaPlay className="ml-2 text-xs" />
               </div>
-            </Link>
+            </div>
 
             {/* View Progress Card */}
             <Link 

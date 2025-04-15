@@ -4,22 +4,82 @@ import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { FaUser, FaRobot, FaHeadset, FaChevronRight } from 'react-icons/fa';
 import VapiGeminiSession from '@/components/VapiGeminiSession';
+import { assessEnglishSkills, AssessmentResult } from '@/lib/gemini-assessment';
+
+// Interface for transcript messages
+interface Message {
+  role: 'user' | 'ai';
+  text: string;
+}
 
 export default function SessionPage() {
   const params = useParams();
   const router = useRouter();
   const sessionId = params.id as string;
   const [sessionStarted, setSessionStarted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   
-  const handleSessionEnd = (transcript: any[]) => {
-    console.log('Session ended with transcript:', transcript);
-    // Here you could save the transcript to a database
+  const handleSessionEnd = async (messages: Message[]) => {
+    console.log('Session ended with transcript:', messages);
     setSessionStarted(false);
+    setIsLoading(true);
     
-    // Redirect to feedback page after 2 seconds
-    setTimeout(() => {
-      router.push(`/session/${sessionId}/feedback`);
-    }, 2000);
+    try {
+      // Check if we actually have messages to assess
+      if (!messages || messages.length === 0) {
+        throw new Error('No conversation transcript available');
+      }
+      
+      // Format the transcript for assessment
+      const formattedTranscript = messages
+        .map(msg => `${msg.role === 'user' ? 'User' : 'AI Coach'}: ${msg.text}`)
+        .join('\n\n');
+      
+      // Get assessment from Gemini
+      const assessment = await assessEnglishSkills(formattedTranscript);
+      
+      // Validate assessment structure
+      const isValid = assessment && 
+        typeof assessment.score === 'number' && 
+        Array.isArray(assessment.strengths) && 
+        Array.isArray(assessment.weaknesses) &&
+        typeof assessment.overall === 'string';
+        
+      if (!isValid) {
+        throw new Error('Invalid assessment structure');
+      }
+      
+      // Store assessment in sessionStorage for the feedback page to access
+      sessionStorage.setItem(`assessment-${sessionId}`, JSON.stringify(assessment));
+      
+      // Redirect to feedback page after 2 seconds
+      setTimeout(() => {
+        router.push(`/session/${sessionId}/feedback`);
+      }, 2000);
+    } catch (error) {
+      console.error('Error processing assessment:', error);
+      
+      // Store a default assessment in case of error
+      const defaultAssessment: AssessmentResult = {
+        score: 70,
+        strengths: ['Participated in English conversation practice'],
+        weaknesses: ['Assessment could not be completed due to technical issues'],
+        pronunciation: 'Assessment not available',
+        fluency: 'Assessment not available',
+        grammar: 'Assessment not available',
+        vocabulary: 'Assessment not available',
+        overall: 'You participated in the English practice session. Unfortunately, we encountered an issue processing your detailed assessment. Keep practicing regularly to improve your skills.'
+      };
+      
+      sessionStorage.setItem(`assessment-${sessionId}`, JSON.stringify(defaultAssessment));
+      
+      // Redirect to feedback page after 2 seconds
+      setTimeout(() => {
+        router.push(`/session/${sessionId}/feedback`);
+      }, 2000);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (

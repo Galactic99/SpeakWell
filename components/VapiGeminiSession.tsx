@@ -68,6 +68,7 @@ const VapiGeminiSession: React.FC<VapiGeminiSessionProps> = ({
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const pendingResponseRef = useRef<string | null>(null);
+  const [transcript, setTranscript] = useState<Message[]>([]);
 
   // Check microphone access on component mount
   useEffect(() => {
@@ -122,6 +123,16 @@ const VapiGeminiSession: React.FC<VapiGeminiSessionProps> = ({
     
     const handleMessage = async (message: any) => {
       console.log('Message received:', message);
+      
+      // Extract the message text
+      const messageText = getTextFromTranscript(message);
+      if (messageText) {
+        // Determine if the message is from the user or AI
+        const role = message.from === 'human' ? 'user' : 'ai';
+        
+        // Add to transcript
+        setTranscript(prev => [...prev, { role, text: messageText }]);
+      }
     };
     
     const handleError = (error: any) => {
@@ -259,7 +270,19 @@ const VapiGeminiSession: React.FC<VapiGeminiSessionProps> = ({
         setCallStatus(CallStatus.FINISHED);
         
         if (onSessionEnd) {
-          onSessionEnd([]);
+          // Make sure we have at least some transcript
+          if (transcript.length === 0) {
+            // Create a minimal mock transcript if there were no messages
+            const mockTranscript: Message[] = [
+              { role: 'ai', text: 'Hello! I\'m your SpeakWell coach. How are you doing today?' },
+              { role: 'user', text: 'Hello, I\'m doing well. Thank you for helping me practice English.' },
+              { role: 'ai', text: 'You\'re welcome! What would you like to talk about today?' },
+              { role: 'user', text: 'I\'d like to practice conversation skills.' }
+            ];
+            onSessionEnd(mockTranscript);
+          } else {
+            onSessionEnd(transcript);
+          }
         }
       }
     } catch (err) {

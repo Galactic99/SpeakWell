@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import { FaUser, FaRobot, FaHeadset, FaChevronRight } from 'react-icons/fa';
 import VapiGeminiSession from '@/components/VapiGeminiSession';
 import { assessEnglishSkills, AssessmentResult } from '@/lib/gemini-assessment';
+import { saveFeedback } from '@/lib/actions/feedback.action';
 
 // Interface for transcript messages
 interface Message {
@@ -42,6 +43,15 @@ export default function SessionPage() {
       
       // Store assessment in sessionStorage for the feedback page to access
       sessionStorage.setItem(`assessment-${sessionId}`, JSON.stringify(assessment));
+      
+      // Save assessment to Firestore
+      const result = await saveFeedback(sessionId, assessment, formattedTranscript);
+      
+      if (!result.success) {
+        console.error('Error saving feedback:', result.message);
+      } else {
+        console.log('Feedback saved successfully with ID:', result.feedbackId);
+      }
       
       // Redirect to feedback page after 2 seconds
       setTimeout(() => {

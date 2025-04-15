@@ -199,7 +199,7 @@ export default function HomePage() {
 
             {/* Feedback Card */}
             <Link 
-              href="/feedback" 
+              href="/home/feedbacks" 
               className="bg-gradient-to-br from-green-900/30 to-black/80 backdrop-blur-sm p-6 rounded-xl border border-green-800/40 hover:border-green-500/70 transition-all hover:shadow-lg hover:shadow-green-900/20 flex flex-col h-64"
             >
               <div className="w-12 h-12 bg-green-900/50 rounded-full flex items-center justify-center mb-4">

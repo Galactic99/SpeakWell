@@ -12,12 +12,13 @@ export default function ClientLayout({
 }) {
   const pathname = usePathname();
   const isHomePath = pathname?.endsWith("/home");
+  const isFeedbackDetailPath = pathname?.includes("/home/feedbacks/") && pathname?.split("/").length > 3;
 
   return (
     <>
       {!isHomePath && <Navbar />}
       <main className="flex-grow">{children}</main>
-      {!isHomePath && <Footer />}
+      {!isHomePath && !isFeedbackDetailPath && <Footer />}
     </>
   );
 } 

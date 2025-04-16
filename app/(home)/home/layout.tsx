@@ -11,14 +11,15 @@ export default function ClientLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const isHomePath = pathname?.endsWith("/home");
+  const isHomePath = pathname === "/home";
   const isFeedbackDetailPath = pathname?.includes("/home/feedbacks/") && pathname?.split("/").length > 3;
+  const isFeedbacksPath = pathname === "/home/feedbacks";
 
   return (
     <>
-      {!isHomePath && <Navbar />}
+      {!isHomePath && <Navbar currentPath={pathname} />}
       <main className="flex-grow">{children}</main>
-      {!isHomePath && !isFeedbackDetailPath && <Footer />}
+      {!isHomePath && !isFeedbackDetailPath && !isFeedbacksPath && <Footer />}
     </>
   );
 } 

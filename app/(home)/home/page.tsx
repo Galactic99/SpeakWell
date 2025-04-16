@@ -165,7 +165,7 @@ export default function HomePage() {
 
             {/* View Progress Card */}
             <Link 
-              href="/progress" 
+              href="/home/progress" 
               className="bg-gradient-to-br from-blue-900/30 to-black/80 backdrop-blur-sm p-6 rounded-xl border border-blue-800/40 hover:border-blue-500/70 transition-all hover:shadow-lg hover:shadow-blue-900/20 flex flex-col h-64"
             >
               <div className="w-12 h-12 bg-blue-900/50 rounded-full flex items-center justify-center mb-4">

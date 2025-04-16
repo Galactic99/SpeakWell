@@ -11,6 +11,7 @@ import {
   Tooltip,
   Legend,
   Filler,
+  ChartOptions,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { DailyActivity } from '@/lib/actions/progress.action';
@@ -79,7 +80,7 @@ export default function ProgressLineChart({ activities, className }: ProgressLin
     }
   }, [activities]);
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
     scales: {
@@ -93,7 +94,7 @@ export default function ProgressLineChart({ activities, className }: ProgressLin
           color: 'rgba(255, 255, 255, 0.6)',
           padding: 10,
           stepSize: 20,
-          callback: (value: number) => `${value}`,
+          callback: (value) => `${value}`,
         },
         border: {
           display: false,
@@ -124,7 +125,7 @@ export default function ProgressLineChart({ activities, className }: ProgressLin
         padding: 10,
         displayColors: false,
         callbacks: {
-          label: function(context: any) {
+          label: function(context) {
             return `Score: ${context.parsed.y}/100`;
           },
         },

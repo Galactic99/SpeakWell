@@ -9,6 +9,7 @@ import {
   Filler,
   Tooltip,
   Legend,
+  ChartOptions,
 } from 'chart.js';
 import { Radar } from 'react-chartjs-2';
 import { ProgressMetrics } from '@/lib/actions/progress.action';
@@ -81,7 +82,7 @@ export default function SkillRadarChart({ metrics, className }: SkillRadarChartP
     });
   }, [metrics]);
 
-  const chartOptions = {
+  const chartOptions: ChartOptions<'radar'> = {
     scales: {
       r: {
         angleLines: {
@@ -101,9 +102,9 @@ export default function SkillRadarChart({ metrics, className }: SkillRadarChartP
           color: 'rgba(255, 255, 255, 0.5)',
           backdropColor: 'transparent',
           stepSize: 20,
-          max: 100,
-          min: 0,
         },
+        min: 0,
+        max: 100,
       },
     },
     plugins: {
@@ -126,7 +127,7 @@ export default function SkillRadarChart({ metrics, className }: SkillRadarChartP
         boxPadding: 5,
         usePointStyle: true,
         callbacks: {
-          label: function(context: any) {
+          label: function(context) {
             return `${context.dataset.label}: ${context.parsed.r}/100`;
           }
         }

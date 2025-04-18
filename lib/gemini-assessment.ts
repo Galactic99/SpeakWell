@@ -59,21 +59,28 @@ export async function assessEnglishSkills(transcript: string): Promise<Assessmen
     }
 
     const prompt = `
-      You are an expert English language teacher and assessor with extensive experience in ESL teaching and CEFR assessments.
+      You are an expert English language assessor with advanced qualifications in TESOL, TEFL, and CEFR standards assessment. You are a recognized authority on evaluating non-native English speakers with precision and insight.
       
-      TASK:
-      Analyze the following conversation transcript from an English practice session between a student and an AI language coach.
-      Provide a comprehensive, professional assessment of the student's English language skills.
+      PRIMARY TASK:
+      Analyze the following English practice conversation between a language learner and an AI coach. 
+      Provide a detailed, evidence-based assessment of the learner's English proficiency.
       
-      TRANSCRIPT:
+      TRANSCRIPT TO ASSESS:
       ${transcript}
       
-      ASSESSMENT REQUIREMENTS:
-      - Be detailed, specific, and constructive in your feedback
-      - Reference actual examples from the transcript whenever possible
-      - Maintain an encouraging, supportive tone while being honest about areas for improvement
-      - Focus on communicative effectiveness rather than just technical accuracy
-      - Consider aspects of pronunciation, fluency, grammar, vocabulary usage, and overall communication
+      ASSESSMENT FRAMEWORK:
+      1. Consider real communicative effectiveness over technical perfection
+      2. Assess how successfully the speaker conveys meaning and engages in conversation
+      3. Balance acknowledgment of strengths with constructive feedback on improvement areas
+      4. Focus on patterns rather than isolated mistakes
+      5. Provide highly specific examples from the transcript as evidence
+      6. Consider relative fluency, pronunciation clarity, grammatical accuracy, vocabulary range, and discourse management
+      
+      ASSESSMENT TONE:
+      - Maintain an encouraging, constructive tone throughout all feedback
+      - Recognize achievements while being honest about areas needing improvement
+      - Frame weaknesses as specific, actionable growth opportunities
+      - Use supportive language that motivates continued learning
       
       OUTPUT FORMAT:
       Return ONLY a JSON object with the following structure - no additional text, no markdown formatting:
@@ -87,37 +94,39 @@ export async function assessEnglishSkills(transcript: string): Promise<Assessmen
           "score": [0-100 integer],
           "feedback": [1-2 sentence assessment of pronunciation quality],
           "examples": [Array of 2-3 specific pronunciation examples from the transcript],
-          "tips": [Array of 2-3 actionable improvement suggestions]
+          "tips": [Array of 2-3 actionable, specific improvement suggestions]
         },
         "fluency": {
           "score": [0-100 integer],
           "feedback": [1-2 sentence assessment of speaking fluency],
           "examples": [Array of 2-3 specific fluency examples from the transcript],
-          "tips": [Array of 2-3 actionable improvement suggestions]
+          "tips": [Array of 2-3 actionable, specific improvement suggestions]
         },
         "grammar": {
           "score": [0-100 integer],
           "feedback": [1-2 sentence assessment of grammatical accuracy],
           "examples": [Array of 2-3 specific grammar examples from the transcript],
-          "tips": [Array of 2-3 actionable improvement suggestions]
+          "tips": [Array of 2-3 actionable, specific improvement suggestions]
         },
         "vocabulary": {
           "score": [0-100 integer],
           "feedback": [1-2 sentence assessment of vocabulary range and usage],
           "examples": [Array of 2-3 specific vocabulary examples from the transcript],
-          "tips": [Array of 2-3 actionable improvement suggestions]
+          "tips": [Array of 2-3 actionable, specific improvement suggestions]
         },
-        "overall": [A paragraph (3-5 sentences) summarizing the assessment, highlighting key strengths and areas for improvement],
-        "nextSteps": [Array of 3-5 specific, actionable recommendations for continued improvement]
+        "overall": [A focused paragraph summarizing key strengths and priority improvement areas],
+        "nextSteps": [Array of 3-5 highly specific, prioritized, actionable recommendations]
       }
       
-      CRITICAL INSTRUCTIONS:
-      1. Return ONLY the raw JSON object
+      CRITICAL RESPONSE REQUIREMENTS:
+      1. Return ONLY the raw JSON object with no additional text
       2. DO NOT use markdown formatting or code blocks
-      3. DO NOT add explanations before or after the JSON
-      4. Ensure all fields are properly populated with meaningful content
-      5. The response must start with { and end with }
-      6. Be specific and reference the transcript, avoid generic feedback
+      3. The response MUST start with { and end with }
+      4. All assessment fields must contain meaningful, specific, and personalized content
+      5. Directly reference actual speech examples from the transcript
+      6. For all tips and recommendations, provide SPECIFIC, ACTIONABLE advice (not generic)
+      7. Base all scores on evidence from the transcript, not assumptions
+      8. Be especially precise in your proficiency level assignment based on CEFR standards
     `;
 
     const result = await model.generateContent(prompt);

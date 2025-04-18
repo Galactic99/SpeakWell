@@ -205,13 +205,19 @@ async function generateSessionName(transcript: string): Promise<string> {
       : transcript;
     
     const prompt = `
-      Based on the following conversation transcript between an English learner and an AI coach,
-      create a concise, descriptive title (maximum 5 words) that captures the main topic or theme.
+      Task: Create a descriptive title for an English learning conversation between a student and an AI coach.
       
-      TRANSCRIPT:
+      REQUIREMENTS:
+      - The title must be concise (3-5 words maximum)
+      - The title should reflect the MAIN TOPIC discussed, not generic descriptions
+      - Focus on specific themes, vocabulary domains, or skills practiced
+      - Use engaging, descriptive language that would help the user recognize this session later
+      - Avoid generic titles like "English Practice" or "Conversation Practice"
+      
+      TRANSCRIPT EXCERPT:
       ${truncatedTranscript}
       
-      TITLE:
+      TITLE (3-5 words only):
     `;
     
     const result = await model.generateContent(prompt);

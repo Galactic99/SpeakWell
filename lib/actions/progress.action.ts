@@ -368,13 +368,21 @@ Weaknesses: ${assessment.weaknesses.join(', ')}
     }).join('\n\n');
     
     const prompt = `
-You are an expert language learning analyst specializing in tracking English language learning progress with advanced analytical capabilities.
+You are a world-class language learning analytics expert specializing in English language acquisition data analysis. You have advanced degrees in applied linguistics, second language acquisition, and data science, with a focus on tracking meaningful language learning progress.
 
-TASK:
-Analyze the following detailed data from a user's English speaking practice sessions, arranged chronologically from oldest to newest. Provide comprehensive insights on their progress, trends, and actionable recommendations.
+PRIMARY TASK:
+Analyze this chronological sequence of English speaking practice assessment data to provide precise, data-driven insights on the learner's progress trajectory, patterns, strengths, and optimal focus areas.
 
-SESSION HISTORY:
+SESSION DATA (chronological order):
 ${feedbackSummaries}
+
+ANALYSIS APPROACH:
+1. Identify clear progression patterns and learning trajectories
+2. Recognize both obvious and subtle improvements across all skill areas
+3. Identify persistent error patterns that require focused attention
+4. Consider the relationship between practice frequency and skill development
+5. Prioritize high-impact improvement opportunities based on the data evidence
+6. Provide personalized, actionable guidance tailored to this specific learner
 
 OUTPUT REQUIREMENTS:
 Return ONLY a JSON object with the following structure (no additional text or formatting):
@@ -383,85 +391,84 @@ Return ONLY a JSON object with the following structure (no additional text or fo
   "totalSessions": [Integer: Number of sessions analyzed],
   "averageScore": [Integer: Average of all overall scores],
   "progressTrend": [String: One of: "improving", "steady", "declining", "insufficient-data"],
-  "mostImprovedArea": [String: Based on comparisons between first and last session],
+  "mostImprovedArea": [String: Based on statistical comparison between first and last sessions],
   "areaNeededFocus": [String: Area with lowest recent scores or least improvement],
   "recentStrengths": [Array of strings: Top 3 strengths from the most recent session],
   "recentWeaknesses": [Array of strings: Top 3 weaknesses from the most recent session],
-  "proficiencyLevel": [String: Current proficiency level],
-  "progressPercentage": [Integer: Percentage improvement in overall score from first to most recent session, 0-100],
-  "insightSummary": [String: 2-3 sentence summary of their progress and actionable next steps],
+  "proficiencyLevel": [String: Current CEFR proficiency level based on latest assessment],
+  "progressPercentage": [Integer: Percentage improvement in overall score from first to most recent session],
+  "insightSummary": [String: 2-3 sentence summary of key findings and highest-priority next steps],
   
   "skillProgress": {
     "pronunciation": {
       "currentScore": [Integer: Current pronunciation score],
       "initialScore": [Integer: Initial pronunciation score],
       "improvementPercentage": [Integer: Percentage improvement],
-      "trend": [String: "improving", "steady", or "declining"],
-      "commonErrors": [Array of strings: Common pronunciation errors identified],
-      "recommendedExercises": [Array of strings: 3-5 specific exercises to improve pronunciation],
-      "detailedFeedback": [String: Detailed analysis of pronunciation progress]
+      "trend": [String: "improving", "steady", or "declining" based on statistical trend analysis],
+      "commonErrors": [Array of strings: Recurring pronunciation errors identified across sessions],
+      "recommendedExercises": [Array: 3-5 specific, targeted exercises to address identified issues],
+      "detailedFeedback": [String: Specific analysis of pronunciation progress patterns]
     },
     "fluency": {
       "currentScore": [Integer: Current fluency score],
       "initialScore": [Integer: Initial fluency score],
       "improvementPercentage": [Integer: Percentage improvement],
-      "trend": [String: "improving", "steady", or "declining"],
-      "commonErrors": [Array of strings: Common fluency issues identified],
-      "recommendedExercises": [Array of strings: 3-5 specific exercises to improve fluency],
-      "detailedFeedback": [String: Detailed analysis of fluency progress]
+      "trend": [String: "improving", "steady", or "declining" based on statistical trend analysis],
+      "commonErrors": [Array of strings: Recurring fluency issues identified across sessions],
+      "recommendedExercises": [Array: 3-5 specific, targeted exercises to address identified issues],
+      "detailedFeedback": [String: Specific analysis of fluency progress patterns]
     },
     "grammar": {
       "currentScore": [Integer: Current grammar score],
       "initialScore": [Integer: Initial grammar score],
       "improvementPercentage": [Integer: Percentage improvement],
-      "trend": [String: "improving", "steady", or "declining"],
-      "commonErrors": [Array of strings: Common grammar errors identified],
-      "recommendedExercises": [Array of strings: 3-5 specific exercises to improve grammar],
-      "detailedFeedback": [String: Detailed analysis of grammar progress]
+      "trend": [String: "improving", "steady", or "declining" based on statistical trend analysis],
+      "commonErrors": [Array of strings: Recurring grammatical errors identified across sessions],
+      "recommendedExercises": [Array: 3-5 specific, targeted exercises to address identified issues],
+      "detailedFeedback": [String: Specific analysis of grammar progress patterns]
     },
     "vocabulary": {
       "currentScore": [Integer: Current vocabulary score],
       "initialScore": [Integer: Initial vocabulary score],
       "improvementPercentage": [Integer: Percentage improvement],
-      "trend": [String: "improving", "steady", or "declining"],
-      "commonErrors": [Array of strings: Common vocabulary limitations identified],
-      "recommendedExercises": [Array of strings: 3-5 specific exercises to improve vocabulary],
-      "detailedFeedback": [String: Detailed analysis of vocabulary progress]
+      "trend": [String: "improving", "steady", or "declining" based on statistical trend analysis],
+      "commonErrors": [Array of strings: Recurring vocabulary limitations identified across sessions],
+      "recommendedExercises": [Array: 3-5 specific, targeted exercises to address identified issues],
+      "detailedFeedback": [String: Specific analysis of vocabulary development patterns]
     }
   },
-  "consistencyScore": [Integer: 0-100 score based on frequency and regularity of practice],
+  "consistencyScore": [Integer: 0-100 score calculated from practice frequency and regularity metrics],
   "studyHabits": {
-    "averageSessionsPerWeek": [Float: Average number of sessions per week],
-    "mostActiveDay": [String: Day of the week with most practice sessions]
+    "averageSessionsPerWeek": [Float: Calculated average sessions per week based on timestamps],
+    "mostActiveDay": [String: Statistically determined most frequent practice day]
   },
   "learningInsights": [
     {
-      "title": [String: Title of the insight],
-      "description": [String: Detailed description of the insight],
-      "impact": [String: "high", "medium", or "low" impact on learning]
-    }
+      "title": [String: Clear, specific insight title],
+      "description": [String: Detailed explanation with evidence from the data],
+      "impact": [String: "high", "medium", or "low" impact assessment with justification]
+    },
+    // Additional insights...
   ],
-  "predictedTimeToNextLevel": [String: Estimated time to reach next proficiency level],
+  "predictedTimeToNextLevel": [String: Data-driven estimate based on current improvement rate],
   "recommendedFocus": {
-    "shortTerm": [Array of strings: Areas to focus on immediately],
-    "longTerm": [Array of strings: Areas to develop over time]
+    "shortTerm": [Array: Prioritized immediate focus areas with specific rationale],
+    "longTerm": [Array: Strategic longer-term development goals with specific rationale]
   },
-  "detailedAnalysis": [String: Comprehensive analysis of overall learning journey, patterns, and recommendations]
+  "detailedAnalysis": [String: Evidence-based analysis of learning patterns, strengths, challenges, and recommendations]
 }
 
-CRITICAL INSTRUCTIONS:
-1. Your analysis must be based solely on the provided session data
-2. Return ONLY the JSON object - no introduction or explanation text
-3. All fields must be populated with meaningful, personalized insights
-4. If there are fewer than 3 sessions, mark progressTrend as "insufficient-data" but still provide best estimates for other fields
-5. Calculate progressPercentage as: ((latestScore - firstScore) / firstScore) * 100, rounded to nearest integer
-6. For skill-specific trends, analyze individual skill scores over time
-7. Provide highly specific and actionable learning insights and recommendations
-8. The response must start with { and end with }
-9. For consistency score, analyze practice frequency and regularity
-10. For predicted time to next level, base on current progress rate and remaining skill gaps
-11. For study habits, calculate actual metrics from session timestamps
-12. Provide 3-5 learning insights with meaningful impact assessments
+CRITICAL RESPONSE REQUIREMENTS:
+1. Return ONLY the raw JSON object with NO additional text
+2. The response MUST start with { and end with }
+3. All fields must contain meaningful, personalized, data-driven insights
+4. Base ALL analyses on clear evidence from the session data
+5. For insufficient data cases (fewer than 3 sessions), indicate this clearly while still providing meaningful estimates
+6. Calculate metrics precisely (e.g., progressPercentage = ((latestScore - firstScore) / firstScore) * 100)
+7. Provide specific, actionable recommendations based directly on the performance data
+8. For each skill area, identify clear patterns rather than isolated instances
+9. Prioritize recommendations based on impact potential and learner's demonstrated needs
+10. If inconsistencies exist in the data, acknowledge them and provide the most likely interpretation
 `;
     
     const result = await model.generateContent(prompt);

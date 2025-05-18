@@ -15,12 +15,13 @@ export default function ClientLayout({
   const isFeedbackDetailPath = pathname?.includes("/home/feedbacks/") && pathname?.split("/").length > 3;
   const isFeedbacksPath = pathname === "/home/feedbacks";
   const isProgressPath = pathname === "/home/progress";
+  const isConversationPath = pathname === "/home/conversations";
 
   return (
     <>
-      {!isHomePath && !isProgressPath && <Navbar currentPath={pathname} />}
+      {!isHomePath && !isProgressPath && !isConversationPath && <Navbar currentPath={pathname} />}
       <main className="flex-grow">{children}</main>
-      {!isHomePath && !isFeedbackDetailPath && !isFeedbacksPath && !isProgressPath && <Footer />}
+      {!isHomePath && !isFeedbackDetailPath && !isFeedbacksPath && !isProgressPath && !isConversationPath && <Footer />}
     </>
   );
 } 

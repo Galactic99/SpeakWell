@@ -1,6 +1,7 @@
-// app/home/themed-conversations/page.tsx
-
+'use client';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { v4 as uuidv4 } from 'uuid';
 import { Sparkles, ChevronRight, MessageCircleHeart } from 'lucide-react';
 
 const themes = [
@@ -12,6 +13,13 @@ const themes = [
 ];
 
 export default function Conversations() {
+  const router = useRouter();
+
+  const handleThemeClick = (theme: string) => {
+    const sessionId = uuidv4();
+    router.push(`/session/${sessionId}?theme=${encodeURIComponent(theme)}`);
+  };
+
   return (
     <div className="min-h-screen bg-black text-white pt-6 pb-16 px-6 md:px-10">
       <div className="max-w-5xl mx-auto">
@@ -34,14 +42,14 @@ export default function Conversations() {
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
             {themes.map((theme) => (
-              <Link
+              <button
                 key={theme}
-                href={`/home/aichat?theme=${encodeURIComponent(theme)}`}
-                className="flex items-center justify-between px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-gray-200 hover:bg-zinc-700 hover:text-white transition-all"
+                onClick={() => handleThemeClick(theme)}
+                className="flex items-center justify-between w-full px-4 py-3 bg-zinc-800 rounded-lg border border-zinc-700 text-gray-200 hover:bg-zinc-700 hover:text-white transition-all"
               >
                 <span className="truncate">{theme}</span>
                 <ChevronRight className="h-4 w-4 ml-2 text-blue-400" />
-              </Link>
+              </button>
             ))}
           </div>
         </section>

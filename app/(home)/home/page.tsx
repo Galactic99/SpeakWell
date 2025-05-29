@@ -182,7 +182,7 @@ export default function HomePage() {
 
             {/* Themed Conversations Card */}
             <Link 
-              href="/conversations" 
+              href="/home/conversations" 
               className="bg-gradient-to-br from-pink-900/30 to-black/80 backdrop-blur-sm p-6 rounded-xl border border-pink-800/40 hover:border-pink-500/70 transition-all hover:shadow-lg hover:shadow-pink-900/20 flex flex-col h-64"
             >
               <div className="w-12 h-12 bg-pink-900/50 rounded-full flex items-center justify-center mb-4">

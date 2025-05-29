@@ -1,4 +1,5 @@
 "use client";
+import { useSearchParams } from 'next/navigation';
 
 import React, { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
@@ -85,6 +86,9 @@ export default function SessionPage() {
     }
   };
 
+  const searchParams = useSearchParams();
+  const theme = searchParams.get("theme") || "English conversation practice";
+
   return (
     <div className="min-h-screen bg-black text-white flex items-center justify-center py-8">
       {isLoading ? (
@@ -153,7 +157,7 @@ export default function SessionPage() {
             <VapiGeminiSession 
               sessionId={sessionId} 
               onSessionEnd={handleSessionEnd}
-              theme="English conversation practice"
+              theme={theme}
             />
           </div>
         </div>

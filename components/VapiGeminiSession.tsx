@@ -213,8 +213,14 @@ const VapiGeminiSession: React.FC<VapiGeminiSessionProps> = ({
       setError(null);
       setCallStatus(CallStatus.CONNECTING);
       
+      var welcomeMessage = ''
       // Initialize welcome message
-      const welcomeMessage = "Hello! I'm your SpeakWell coach. How are you doing today? What would you like to talk about?";
+      if (theme=="English conversation practice"){
+        welcomeMessage = "Hello! I'm your SpeakWell coach. How are you doing today? What would you like to talk about?";
+      }
+      else{
+        welcomeMessage = `Hello! I'm your SpeakWell coach. How are you doing today? Let's talk about ${theme}. Do you have a specific topic in mind, or should I pick one to get us started?`;
+      }
       
       console.log("Starting Vapi call...");
       
